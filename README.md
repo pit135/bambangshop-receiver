@@ -83,5 +83,8 @@ This is the place for you to write reflections:
 ### Mandatory (Subscriber) Reflections
 
 #### Reflection Subscriber-1
+1. Menurut saya, RwLock dipakai karena di kasus ini kita punya banyak operasi read (lihat list notification) dibanding write (tambah notification), RwLock memungkinkan banyak thread membaca data secara bersamaan tanpa saling blocking, tapi tetep aman saat ada yang menulis. Kalau pakai Mutex, semua akses (baik read maupun write) akan dikunci satu per satu, jadi lebih sering keblock dan kurang efisien, jadi RwLock lebih cocok karena read bisa paralel, sementara write tetep aman.
+
+2. Menurut saya, rust ga membolehkan mutasi langsung pada static variable seperti di Java karena rust sangat ketat soal memory safety dan thread safety. Kalau static bisa diubah sembarangan, bisa terjadi data race yang berbahaya. Makanya rust haruskan kita pakai wrapper seperti RwLock, Mutex, atau struktur threadsafe lain, dan biasanya dibantu dengan lazy_static supaya inisialisasinya aman, jdi ini memang desain rust supaya program lebih aman sejak compile time, bukan seperti Java yang lebih fleksibel tapi risikonya lebih besar.
 
 #### Reflection Subscriber-2
